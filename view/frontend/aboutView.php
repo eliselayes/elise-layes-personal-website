@@ -1,10 +1,10 @@
 <?php $title = 'A propos'; ?>
-<?php include("tools.php"); ?>
-<?php include("contact.php"); ?>
-<?php include("menu.php"); ?>
+<?php include("templates/tools.php"); ?>
+<?php include("templates/contact.php"); ?>
+<?php include("templates/menu.php"); ?>
 <?php ob_start(); ?>
 
-    <div class="container container-header">
+    <div class="container website-container container-header">
         <div class="header-princ">
             <h1 class="title">&Agrave; propos</h1>
         </div>
@@ -74,5 +74,5 @@
 	  <!-- Placed at the end of the document so the pages load faster -->
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php require('templates/template.php'); ?>
   
