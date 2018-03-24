@@ -1,21 +1,30 @@
 <?php
 
-namespace Site_perso\Model;
+namespace Site_perso\Controller;
 
 // Chargement des classes
+require_once('controller/Controller.php');
 require_once('model/PostManager.php');
 require_once('model/LogManager.php');
 require_once('model/CommentManager.php');
 
-class Backend {
+use \Twig_Loader_Filesystem;
+use \Twig_Environment;
+
+class Backend extends Controller {
     private $_postmanager;
     private $_logManager;
     private $_commentManager;
+    protected $_twig;
 
     public function __construct() {
         $this->_postManager = new \Site_perso\Model\PostManager();
         $this->_logManager = new \Site_perso\Model\LogManager();
         $this->_commentManager = new \Site_perso\Model\CommentManager();
+        
+        $loader = new Twig_Loader_Filesystem(array('view/backend/templates'));
+        $this->_twig = new Twig_Environment($loader, array(
+        'cache' => false,));
     }
 
 
@@ -30,8 +39,8 @@ class Backend {
         require('view/frontend/logView.php');
     }
 
-    public function sendText($content) {
-        $this->_postManager->sendText($content);
+    public function sendText($title, $content, $category) {
+        $this->_postManager->sendText($title, $content, $category);
         echo '<script>alert("Votre texte a bien été envoyé");</script>';
         require('view/backend/tinymceView.php');
     }
@@ -43,8 +52,9 @@ class Backend {
 
 
     public function mainBackend($name, $pass) {
-        $hash = $this->_logManager->getPass();
-        if ($name == "Elise" && password_verify($pass, $hash))  {
+        $hash = $this->_logManager->getPass($name);
+        $pseudo =  $this->_logManager->getName($hash);
+        if ($pseudo == $name && password_verify($pass, $hash))  {
             require('view/backend/mainBackendView.php');
         }
         else {
@@ -103,8 +113,8 @@ class Backend {
         require('view/backend/mceUpdateView.php');
     }
     
-    public function modifyPost($content, $id) {
-        $postToBeMod = $this->_postManager->modifyPost($content, $id);
+    public function modifyPost($title, $content, $category, $id) {
+        $postToBeMod = $this->_postManager->modifyPost($title, $content, $category, $id);
         echo '<script>alert("L\'article a bien été modifié");</script>';
         $post = $this->_postManager->getPost($id);
         require('view/backend/mceUpdateView.php');
