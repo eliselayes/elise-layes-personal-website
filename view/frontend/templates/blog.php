@@ -40,8 +40,8 @@
                 <h1 class="blog-title">Le blog d'<span>&Eacute;lise Layes</span></h1>
             </div>
                     <a class="blog-nav-item" href="index.php?action=blog">Accueil</a>
-                    <a class="blog-nav-item" href="index.php?action=seePosts">Informatique</a>
-                    <a class="blog-nav-item" href="index.php?action=seeFolders">Jeux vidéo</a>
+                    <a class="blog-nav-item" href="index.php?action=seeInformatique">Informatique</a>
+                    <a class="blog-nav-item" href="index.php?action=seeJV">Jeux vidéo</a>
                     <a class="blog-nav-item" href="index.php">Me connaître</a>
                 </nav>
             </div>
