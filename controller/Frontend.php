@@ -1,26 +1,39 @@
 <?php
 
-namespace Site_perso\Model;
+namespace Site_perso\Controller;
 
+require_once('controller/Controller.php');
 require_once('model/PostManager.php');
 require_once('model/LogManager.php');
 require_once('model/CommentManager.php');
 
 
-class Frontend {
+use \Twig_Loader_Filesystem;
+use \Twig_Environment;
+
+class Frontend extends Controller {
     private $_postManager;
     private $_logManager;
     private $_commentManager;
+    
+    protected $_twig;
 
     public function __construct() {
         // initialisation
         $this->_postManager = new \Site_perso\Model\PostManager();
         $this->_logManager = new \Site_perso\Model\LogManager();
         $this->_commentManager = new \Site_perso\Model\CommentManager();
+        
+        $loader = new Twig_Loader_Filesystem(array('view/frontend/templates'));
+        $this->_twig = new Twig_Environment($loader, array(
+        'cache' => false,));
+        echo $this->_twig->render('menu.php');
     }
 
     public function main() {
         require('view/frontend/homeView.php');
+        
+        //$this->twig->render('frontend/homeView.php');
     }
     
     public function about() {
@@ -57,27 +70,37 @@ class Frontend {
         require('view/frontend/mainBlogView.php');
     }
     
-    public function seePosts($page) {
+    public function seeInformatique($page) {
         $totalPages = $this->_postManager->getTotalPages();
         $cPage = $this->_postManager->getCPage($page);
         $posts = $this->_postManager->getPosts();
         $months = $this->_postManager->getMonths();
-        require('view/frontend/listPostsView.php');
+        require('view/frontend/informatiqueView.php');
     }
     
-    public function seeFolders() {
-        $posts = $this->_postManager->getPosts();
-        $months = $this->_postManager->getMonths();
-        require('view/frontend/foldersView.php');
-    }
-
-
-    public function changePage($page) {
+    public function seeJV($page) {
         $totalPages = $this->_postManager->getTotalPages();
         $cPage = $this->_postManager->getCPage($page);
         $posts = $this->_postManager->getPosts();
         $months = $this->_postManager->getMonths();
-        require('view/frontend/listPostsView.php');
+        require('view/frontend/JVView.php');
+    }
+
+
+    public function changePageInfo($page) {
+        $totalPages = $this->_postManager->getTotalPages();
+        $cPage = $this->_postManager->getCPage($page);
+        $posts = $this->_postManager->getPosts();
+        $months = $this->_postManager->getMonths();
+        require('view/frontend/informatiqueView.php');
+    }
+    
+    public function changePageJV($page) {
+        $totalPages = $this->_postManager->getTotalPages();
+        $cPage = $this->_postManager->getCPage($page);
+        $posts = $this->_postManager->getPosts();
+        $months = $this->_postManager->getMonths();
+        require('view/frontend/JVView.php');
     }
 
     public function seeOnePost($postId) {
