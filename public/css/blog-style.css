@@ -1,5 +1,5 @@
-.pager {
-    display: none;
+a {
+    color: #8689c1;
 }
 
 .commentForm {
@@ -61,23 +61,66 @@
 #changePass h2 {
     margin-bottom: 20px;
 }
+
+
+
+#header-editor {
+    height: 60px;
+    text-align: center;
+}
+
+#editor-title {
+    font-size: 50px;
+    font-family: 'Great Vibes', cursive;
+    text-shadow: 0 0 0.2em black;
+}
+
+#editor form {
+    background-color: whitesmoke;
+    color: #7b1c19;   
+    padding: 10px;
+}
+
+#editor textarea {
+    height: 300px;
+}
+
+#mceu_11 {
+    margin-top: 20px;
+}
+
+#sendPost {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#editor-back {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#editor-back a {
+    color: white;
+    text-shadow: 0 0 0.2em black;
+}
 /*
  * Override Bootstrap's default container.
  */
 
 .blog-container {
-    background-color: #fdf4f4;
+    background-color: white;
     color: #333;
 }
 
 @media (orientation: landscape) {
     .blog-container {
-        border-right: 40px solid white;
-        border-left: 40px solid white;
+        border-right: 10px solid #333;
+        border-left: 10px solid #333;
         margin-top: 100px;
-        border-top: 40px solid white;
+        border-top: 10px solid #333;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
+        padding: 50px;
     }
 }
 
