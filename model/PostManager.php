@@ -26,27 +26,27 @@ class PostManager extends Manager {
 
     public function getPosts() {
         $limit = ($this->cPage - 1)*$this->nbPostsPerPage;
-        $sql = 'SELECT id, SUBSTRING(content, 1, 500) AS short_content, DATE_FORMAT(date_creation, \'%d/%m/%Y\') AS creation_date_fr FROM posts ORDER BY id DESC LIMIT ' . $limit . ',' . $this->nbPostsPerPage;
+        $sql = 'SELECT id, title, SUBSTRING(content, 1, 500) AS short_content, category, DATE_FORMAT(date_creation, \'%d/%m/%Y\') AS creation_date_fr FROM posts ORDER BY id DESC LIMIT ' . $limit . ',' . $this->nbPostsPerPage;
         $req = $this->executeRequest($sql);
         return $req;
     }
 
     public function getPost($postId) {
-        $sql = 'SELECT id, content, DATE_FORMAT(date_creation, \'%d/%m/%Y\') AS creation_date_fr FROM posts WHERE id = ?';
+        $sql = 'SELECT id, title, content, category, DATE_FORMAT(date_creation, \'%d/%m/%Y\') AS creation_date_fr FROM posts WHERE id = ?';
         $req = $this->executeRequest($sql, array($postId));
         $post = $req->fetch();
         return $post;
     }
     
     public function getLastPost() {
-        $sql = 'SELECT id, content, DATE_FORMAT(date_creation, \'%d/%m/%Y\') AS creation_date_fr FROM posts ORDER BY id DESC LIMIT 0, 1';
+        $sql = 'SELECT id, title, content, DATE_FORMAT(date_creation, \'%d/%m/%Y\') AS creation_date_fr FROM posts ORDER BY id DESC LIMIT 0, 1';
         $req = $this->executeRequest($sql);
         return $req;
     }
 
-    public function sendText($content) {
-        $sql = 'INSERT INTO posts(content, date_creation) VALUES(?, NOW())';
-        $req = $this->executeRequest($sql, array($content));
+    public function sendText($title, $content, $category) {
+        $sql = 'INSERT INTO posts(title, content, category, date_creation) VALUES(?, ?, ?, NOW())';
+        $req = $this->executeRequest($sql, array($title, $content, $category));
         $posts = $req->fetch();
     }
 
@@ -71,7 +71,7 @@ class PostManager extends Manager {
     }
 
     public function getPostsPerMonth($m) {
-        $sql = 'SELECT id, SUBSTRING(content, 1, 150) AS short_content, DATE_FORMAT(date_creation, \'%d/%m/%Y\') AS creation_date_fr FROM posts WHERE MONTH(date_creation) = ? ORDER BY id DESC';
+        $sql = 'SELECT id, title, SUBSTRING(content, 1, 150) AS short_content, DATE_FORMAT(date_creation, \'%d/%m/%Y\') AS creation_date_fr FROM posts WHERE MONTH(date_creation) = ? ORDER BY id DESC';
         $postsPerMonth = $this->executeRequest($sql, array($m));
         return $postsPerMonth;
     }
@@ -81,8 +81,8 @@ class PostManager extends Manager {
         $postToBeDel = $this->executeRequest($sql, array($id));
     }
 
-    public function modifyPost($content, $id) {
-        $sql = 'UPDATE posts SET content = ? WHERE id = ?';
-        $postToBeMod = $this->executeRequest($sql, array($content, $id));
+    public function modifyPost($title, $content, $category, $id) {
+        $sql = 'UPDATE posts SET title = ?, content = ?, category = ?, WHERE id = ?';
+        $postToBeMod = $this->executeRequest($sql, array($title, $content, $category, $id));
     }
 }
