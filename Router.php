@@ -1,6 +1,6 @@
 <?php
 
-namespace Site_perso\Model;
+namespace Site_perso\Controller;
 
 require_once('./index.php');
 require_once('controller/Frontend.php');
@@ -30,15 +30,20 @@ class Router {
                 elseif ($_GET['action'] == 'blog') {
                     $controler_frontend->blog();
                 }
-                elseif ($_GET['action'] == 'seePosts') {
-                    $controler_frontend->seePosts(1);
+                elseif ($_GET['action'] == 'seeInformatique') {
+                    $controler_frontend->seeInformatique(1);
                 }
-                elseif ($_GET['action'] == 'seeFolders') {
-                    $controler_frontend->seeFolders();
+                elseif ($_GET['action'] == 'seeJV') {
+                    $controler_frontend->seeJV(1);
                 }
-                elseif($_GET['action']== 'changePage') {
+                elseif($_GET['action']== 'changePageInfo') {
                     if(isset($_GET['page'])) {
-                        $controler_frontend->changePage($_GET['page']);
+                        $controler_frontend->changePageInfo($_GET['page']);
+                    }
+                }
+                elseif($_GET['action']== 'changePageJV') {
+                    if(isset($_GET['page'])) {
+                        $controler_frontend->changePageJV($_GET['page']);
                     }
                 }
                 elseif ($_GET['action'] == 'login') {
@@ -69,8 +74,8 @@ class Router {
                     }
                 }
                 elseif ($_GET['action'] == 'sendText') {
-                    if(!empty($_POST['content'])) {
-                        $controler_backend->sendText($_POST['content']);
+                    if(!empty($_POST['title']) && !empty($_POST['content']) && !empty($_POST['category'])) {
+                        $controler_backend->sendText($_POST['title'], $_POST['content'], $_POST['category']);
                     }
                     else {
                         $controler_backend->displaySendText();
@@ -127,8 +132,13 @@ class Router {
                     }
                 }
                 elseif ($_GET['action'] == 'modifyPost') {
-                    if (isset($_GET['id']) && $_GET['id'] > 0) {
-                        $controler_backend->modifyPost($_POST['content'], $_GET['id']);
+                    if (isset($_GET['id']) && $_GET['id'] > 0 ) {
+                        if(!empty($_POST['title']) && !empty($_POST['content']) && !empty($_POST['category'])) {
+                            $controler_backend->modifyPost($_POST['title'], $_POST['content'], $_POST['category'], $_GET['id']);
+                        } else {
+                            echo '<script>alert("Vous n\'avez pas rempli tous les champs");</script>';
+                            $controler_backend->displayPostToBeUpd($_GET['id']);
+                        }
                     }
                 }
             }
