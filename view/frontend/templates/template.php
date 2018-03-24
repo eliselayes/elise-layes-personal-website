@@ -47,6 +47,9 @@
       <script src="public/js/bootstrap.min.js"></script>
       <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
       <script src="public/js/ie10-viewport-bug-workaround.js"></script>	
-      <script src="public/js/main.js"></script>
+      <script src="public/js/home.js"></script>
+      <script src="public/js/tools.js"></script>
+      <script src="public/js/contact.js"></script>
+      <script src="public/js/ajax.js"></script>
     </body>
 </html>
