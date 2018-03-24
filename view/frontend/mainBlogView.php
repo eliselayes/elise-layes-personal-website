@@ -7,11 +7,8 @@
         <?php
             while ($data = $lastPost->fetch()) {
         ?>
-            <h2 class="blog-post-title">Sample blog post</h2>
-            <p class="blog-post-meta">
-                <?= $data['creation_date_fr']; ?>
-            </p>
-
+            <h2 class="blog-post-title"><?= $data['title']; ?></h2>
+            <p class="blog-post-meta"><?= $data['creation_date_fr']; ?></p>
             <p><?= html_entity_decode($data['content']); ?>...</p>
             <a href="index.php?action=seeOnePost&amp;id=<?= $data['id'] ?>">  lire la suite</a>
         <?php
