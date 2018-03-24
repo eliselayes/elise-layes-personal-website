@@ -1,17 +1,25 @@
 <?php $title = 'Article'; ?>
 
 <?php ob_start(); ?>
-
+<share>
+  <comment>
 <div class="blog-post">
-    <h2 class="blog-post-title">Sample blog post</h2>
-    <p class="blog-post-meta">
-        <?= $post['creation_date_fr'] ?>
-    </p>
-
-    <p>
-        <?= html_entity_decode($post['content']) ?>
-    </p>
+    <h2 class="blog-post-title"><?= $post['title']; ?></h2>
+    <p class="blog-post-meta"><?= $post['creation_date_fr'] ?></p>
+    <p><?= html_entity_decode($post['content']) ?></p>
 </div><!-- /.blog-post -->
+      </comment>
+  <visibility>
+    <code>anyone</code>
+  </visibility>
+    <form class="log commentForm" action="https://api.linkedin.com/v1/people/~/shares?format=json" method="post">
+        <div class="containElmForm submit"><input type="submit" />
+        </div>
+    </form>
+</share>
+
+<a class="twitter-share-button" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <h2>Commentaires</h2>
     <form class="log commentForm" action="index.php?action=addComment&amp;id=<?= $_GET['id'] ?>" method="post">
@@ -46,6 +54,9 @@
     }
     ?>
     </div>
+    
+
+    
 
 <?php $content = ob_get_clean(); ?>      
 
